@@ -46,8 +46,8 @@ slider to the matching speed readout.
 1. **Install FanControl V238 or newer.** This version ships PawnIO and
    registers its kernel driver. Verify `C:\Program Files\PawnIO\PawnIOLib.dll`
    exists.
-2. Drop the built plugin DLL into FanControl's `Plugins\` folder (a
-   subdirectory is fine — FanControl scans recursively).
+2. In FanControl, open **Settings → Plugins** and install
+   `FanControl.AcerPredatorPH315.dll` from there.
 3. Restart FanControl. Two new fan speed sensors and two control sliders
    should appear under **Acer Predator PH315-53**.
 
