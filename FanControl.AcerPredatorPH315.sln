@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11819.183 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FanControl.AcerPredatorPH315", "FanControl.AcerPredatorPH315.csproj", "{DCB19A9E-68D3-D608-AE48-8741C0D6A8BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCB19A9E-68D3-D608-AE48-8741C0D6A8BA}.Debug|x64.ActiveCfg = Debug|x64
+		{DCB19A9E-68D3-D608-AE48-8741C0D6A8BA}.Debug|x64.Build.0 = Debug|x64
+		{DCB19A9E-68D3-D608-AE48-8741C0D6A8BA}.Release|x64.ActiveCfg = Release|x64
+		{DCB19A9E-68D3-D608-AE48-8741C0D6A8BA}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B3378F4-0815-4445-94E1-07FF81600D08}
+	EndGlobalSection
+EndGlobal

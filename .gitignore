@@ -1,0 +1,6 @@
+bin/
+obj/
+*.user
+.vs/
+lib/FanControl.Plugins.dll
+modules/LpcACPIEC.bin
