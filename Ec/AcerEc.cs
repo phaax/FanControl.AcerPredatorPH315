@@ -37,12 +37,7 @@ internal sealed class AcerEc : IDisposable {
     public byte ReadByte( byte register ) {
         AcquireMutex();
         try {
-            WaitIbfClear();
-            PortWrite( EC_SC, RD_EC );
-            WaitIbfClear();
-            PortWrite( EC_DATA, register );
-            WaitObfSet();
-            return PortRead( EC_DATA );
+            return ReadByteUnlocked( register );
         } finally {
             _ecMutex.ReleaseMutex();
         }
@@ -51,9 +46,14 @@ internal sealed class AcerEc : IDisposable {
     public ushort ReadWord( byte register ) {
         // The NBFC config has ReadWriteWords=true, which means RPM-style sensors are
         // exposed as two consecutive byte registers, little-endian.
-        var lo = ReadByte( register );
-        var hi = ReadByte( (byte)(register + 1) );
-        return (ushort)(lo | (hi << 8));
+        AcquireMutex();
+        try {
+            var lo = ReadByteUnlocked( register );
+            var hi = ReadByteUnlocked( (byte)(register + 1) );
+            return (ushort)(lo | (hi << 8));
+        } finally {
+            _ecMutex.ReleaseMutex();
+        }
     }
 
     public void WriteByte( byte register, byte value ) {
@@ -113,6 +113,15 @@ internal sealed class AcerEc : IDisposable {
     }
 
     private void PortWrite( byte port, byte value ) => _pio.Execute( "ioctl_pio_write", [port, value] );
+
+    private byte ReadByteUnlocked( byte register ) {
+        WaitIbfClear();
+        PortWrite( EC_SC, RD_EC );
+        WaitIbfClear();
+        PortWrite( EC_DATA, register );
+        WaitObfSet();
+        return PortRead( EC_DATA );
+    }
 
     public void Dispose() => _ecMutex.Dispose();
 }

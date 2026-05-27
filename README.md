@@ -61,7 +61,7 @@ If the plugin fails to initialize, FanControl swallows the exception. See
 2. Download `LpcACPIEC.bin` from
    [namazso/PawnIO.Modules releases](https://github.com/namazso/PawnIO.Modules/releases)
    and drop it into `./modules/`.
-3. `dotnet build -c Release`
+3. `dotnet build FanControl.AcerPredatorPH315.sln -c Release`
 
 The project multi-targets `netstandard2.0` and `net10.0-windows`:
 
@@ -72,6 +72,23 @@ The project multi-targets `netstandard2.0` and `net10.0-windows`:
 
 If you don't care about portability, the `net10.0-windows` DLL matches a
 current FanControl install.
+
+The solution contains the multi-targeted plugin project and a separate
+`AcerProbe` console utility. There is no wrapper build project; a normal
+solution build produces both plugin target-framework outputs directly.
+
+### Probe utility
+
+`Probe/FanControl.AcerPredatorPH315.Probe.csproj` builds `AcerProbe`, a
+standalone administrator console tool for exploring the Acer gaming WMI
+surface without loading the FanControl plugin. It does not use PawnIO or touch
+the EC directly.
+
+Example:
+
+```
+dotnet run --project Probe/FanControl.AcerPredatorPH315.Probe.csproj -- enum
+```
 
 ## Known issues
 
@@ -97,6 +114,8 @@ Check that file first whenever the plugin behaves oddly.
 ## Layout
 
 ```
+FanControl.AcerPredatorPH315.sln      # plugin + probe solution
+FanControl.AcerPredatorPH315.csproj   # multi-target plugin project
 AcerPredatorPlugin.cs                 # IPlugin2 entrypoint
 Diagnostics/PluginLog.cs              # file logger (FanControl swallows init exceptions)
 Ec/AcerEc.cs                          # EC handshake over 0x62/0x66
@@ -106,6 +125,7 @@ PawnIO/PawnIOLibLoader.cs             # locates PawnIOLib.dll outside PATH and L
 PawnIO/PawnIOSession.cs               # RAII handle + module loader
 Sensors/PredatorFanSpeedSensor.cs     # IPluginSensor (read)
 Sensors/PredatorFanControlSensor.cs   # IPluginControlSensor2 (write, paired)
+Probe/                                # standalone WMI probe utility
 modules/LpcACPIEC.bin                 # embedded PawnIO module (you supply)
 lib/FanControl.Plugins.dll            # plugin SDK (you supply)
 ```

@@ -44,6 +44,7 @@ public sealed class AcerPredatorPlugin : IPlugin2 {
             PluginLog.Info( "Initialize: EC ready (manual mode)" );
         } catch ( Exception ex ) {
             PluginLog.Error( "Initialize failed", ex );
+            Close();
             throw;
         }
     }
